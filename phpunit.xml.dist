@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <testsuites>
+        <testsuite name="Topology Mapper Test Suite">
+            <directory suffix="Test.php">./tests</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_KEY" value="base64:6Cu/ozMDhuDg94x6yPzP3o8R8j7m9N8j8x/z9X7e5sY="/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="TOPOLOGY_STORAGE_DRIVER" value="memory"/>
+    </php>
+</phpunit>

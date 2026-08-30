@@ -1,20 +1,30 @@
 {
-    "name": "your-username/laravel-topology-mapper",
-    "description": "Dynamic visual application topology and network dependency mapper for Laravel.",
-    "type": "library",
+    "name": "emirkefi/laravel-topology-mapper",
+    "description": "Dynamic visual application topology and network dependency mapper for Laravel with OSPF-style architectural zones and live data flow tracing.",
+    "keywords": [
+        "laravel",
+        "topology",
+        "network-map",
+        "telemetry",
+        "tracing",
+        "cisco-simulation",
+        "architecture",
+        "dependency-graph",
+        "observability"
+    ],
+    "homepage": "https://github.com/emirkefi/laravel-topology-mapper",
     "license": "MIT",
     "authors": [
         {
-            "name": "Your Name",
-            "email": "your-email@example.com"
+            "name": "Emir Kefi",
+            "email": "emirkefi@example.com",
+            "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.2",
         "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
-        "illuminate/http": "^10.0|^11.0|^12.0|^13.0",
-        "illuminate/database": "^10.0|^11.0|^12.0|^13.0",
-        "illuminate/redis": "^10.0|^11.0|^12.0|^13.0"
+        "illuminate/contracts": "^10.0|^11.0|^12.0|^13.0"
     },
     "require-dev": {
         "orchestra/testbench": "^8.0|^9.0|^10.0",
@@ -22,20 +32,27 @@
     },
     "autoload": {
         "psr-4": {
-            "YourVendor\\TopologyMapper\\": "src/"
+            "EmirKefi\\TopologyMapper\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "YourVendor\\TopologyMapper\\Tests\\": "tests/"
+            "EmirKefi\\TopologyMapper\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "YourVendor\\TopologyMapper\\TopologyServiceProvider"
-            ]
+                "EmirKefi\\TopologyMapper\\TopologyServiceProvider"
+            ],
+            "aliases": {
+                "Topology": "EmirKefi\\TopologyMapper\\Facades\\Topology"
+            }
         }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {}
     },
     "minimum-stability": "dev",
     "prefer-stable": true
