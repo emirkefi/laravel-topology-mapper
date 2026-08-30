@@ -6,6 +6,6 @@ composer.lock
 .DS_Store
 Thumbs.db
 *.log
-storage/
+/storage/
 .idea/
 .vscode/
