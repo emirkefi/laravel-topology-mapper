@@ -3,7 +3,6 @@
 <div align="center">
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/emirkefi/laravel-topology-mapper.svg?style=flat-square)](https://packagist.org/packages/emirkefi/laravel-topology-mapper)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/emirkefi/laravel-topology-mapper/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/emirkefi/laravel-topology-mapper/actions)
 [![Total Downloads](https://img.shields.io/packagist/dt/emirkefi/laravel-topology-mapper.svg?style=flat-square)](https://packagist.org/packages/emirkefi/laravel-topology-mapper)
 [![License](https://img.shields.io/packagist/l/emirkefi/laravel-topology-mapper.svg?style=flat-square)](https://github.com/emirkefi/laravel-topology-mapper/blob/main/LICENSE.md)
 
