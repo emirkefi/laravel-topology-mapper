@@ -12,7 +12,7 @@
 
 ---
 
-## 🌟 Overview
+##  Overview
 
 Tools exist to map database schemas or list application routes, but until now there has been no tool that automatically maps a Laravel application's **living network topology**.
 
@@ -20,24 +20,24 @@ Tools exist to map database schemas or list application routes, but until now th
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
-- 🌐 **Living Network Simulation**: Interactive physics-based canvas modeling your entire application infrastructure and external dependencies with zero front-end build step required.
-- 🗺️ **OSPF Architectural Zones**: Automatic classification of entities into architectural areas:
+-  **Living Network Simulation**: Interactive physics-based canvas modeling your entire application infrastructure and external dependencies with zero front-end build step required.
+-  **OSPF Architectural Zones**: Automatic classification of entities into architectural areas:
   - **Zone 0 (Backbone)**: Core Controllers, HTTP Routes, Kernel Entrypoints
   - **Area 1 (Data Tier)**: MySQL, PostgreSQL, SQLite, Read/Write Replicas
   - **Area 2 (Cache & In-Memory Tier)**: Redis Standalone & Clusters, Memcached
   - **Area 3 (Async & Queue Tier)**: SQS, RabbitMQ, Redis Queues, Background Job Workers
   - **Area 4 (External Autonomous Systems)**: Stripe, SendGrid, OpenAI, GitHub, S3, Webhooks
-- ⚡ **Multi-Hop Trace Flow Correlator**: Replay the exact journey of data as it travels across process boundaries:
+-  **Multi-Hop Trace Flow Correlator**: Replay the exact journey of data as it travels across process boundaries:
   `[POST /checkout] ➔ [DB: orders write] ➔ [Queue: ProcessOrderJob] ➔ [HTTP: api.stripe.com (142ms)] ➔ [Mail: Mailgun]`
-- 🚨 **Bottleneck & Anomaly Detection**: Real-time identification of slow database queries, high-latency external APIs (>200ms warning, >1000ms critical), and failing dependencies.
-- 📦 **Static Scanner + Dynamic Telemetry**: Automatically scans your configurations on boot and enriches the graph dynamically with live traffic telemetry.
-- 💻 **Artisan CLI Map**: Print ANSI/ASCII network topology maps, health ratings, and latency metrics directly in your terminal.
+-  **Bottleneck & Anomaly Detection**: Real-time identification of slow database queries, high-latency external APIs (>200ms warning, >1000ms critical), and failing dependencies.
+-  **Static Scanner + Dynamic Telemetry**: Automatically scans your configurations on boot and enriches the graph dynamically with live traffic telemetry.
+-  **Artisan CLI Map**: Print ANSI/ASCII network topology maps, health ratings, and latency metrics directly in your terminal.
 
 ---
 
-## 📦 Installation
+##  Installation
 
 Install the package via Composer:
 
@@ -94,7 +94,7 @@ return [
 
 ---
 
-## 🖥️ Dashboard & Web Interface
+##  Dashboard & Web Interface
 
 Navigate to `/topology` in your browser to access the visual dashboard:
 
@@ -120,7 +120,7 @@ Gate::define('viewTopology', function (User $user) {
 
 ---
 
-## ⌨️ Artisan CLI Commands
+##  Artisan CLI Commands
 
 ### 1. Visual ASCII Network Map & Browser Auto-Launch
 Print an ASCII / ANSI visual map and latency overview in your terminal and automatically open the interactive simulation in your default browser:
@@ -162,7 +162,7 @@ php artisan topology:export --path=storage/app/topology-backup.json
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 Run the test suite via PHPUnit:
 
@@ -172,7 +172,7 @@ vendor/bin/phpunit
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! Please check out [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
