@@ -18,6 +18,7 @@ Tools exist to map database schemas or list application routes, but until now th
 
 **Laravel Topology Mapper** inspects your `.env`, database connections (MySQL, PostgreSQL, Read Replicas), Redis clusters, message brokers (SQS, RabbitMQ, Redis Queue), and outbound HTTP client requests. It correlates end-to-end data flows and renders an **interactive, Cisco Packet Tracer-style visual simulation dashboard** with **OSPF-style architectural zones**, live packet animations, and real-time bottleneck detection.
 
+<img width="800" height="432" alt="ezgif-62f82f238f8559a2" src="https://github.com/user-attachments/assets/ffc6eaca-e0e3-4007-8b63-755a63c7e442" />
 ---
 
 ##  Key Features
@@ -34,6 +35,8 @@ Tools exist to map database schemas or list application routes, but until now th
 -  **Bottleneck & Anomaly Detection**: Real-time identification of slow database queries, high-latency external APIs (>200ms warning, >1000ms critical), and failing dependencies.
 -  **Static Scanner + Dynamic Telemetry**: Automatically scans your configurations on boot and enriches the graph dynamically with live traffic telemetry.
 -  **Artisan CLI Map**: Print ANSI/ASCII network topology maps, health ratings, and latency metrics directly in your terminal.
+
+<img width="800" height="432" alt="ezgif-632746b1c021ae63" src="https://github.com/user-attachments/assets/3b4523bb-9329-44de-82a9-cb44f87bc59c" />
 
 ---
 
