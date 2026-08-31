@@ -463,6 +463,76 @@
             color: var(--text-muted);
         }
 
+        /* Doctor Recommendation Box */
+        .doctor-fix-box {
+            margin-top: 8px;
+            padding: 8px;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .doctor-fix-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            color: #34d399;
+        }
+
+        .doctor-badge-sev {
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 1px 5px;
+            border-radius: 4px;
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .doctor-badge-sev.HIGH {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+
+        .doctor-badge-sev.MEDIUM {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .doctor-fix-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .doctor-fix-solution {
+            font-size: 11px;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+
+        .doctor-code-block {
+            background: #040711;
+            border: 1px solid #1e293b;
+            border-radius: 4px;
+            padding: 6px 8px;
+            font-size: 10px;
+            color: #38bdf8;
+            white-space: pre-wrap;
+            word-break: break-all;
+            position: relative;
+            max-height: 140px;
+            overflow-y: auto;
+        }
+
         /* Node Details Modal / Drawer */
         .drawer-overlay {
             position: absolute;
@@ -732,6 +802,15 @@
                     <div><span style="color: var(--text-dim);">Host/Endpoint:</span> <span class="mono" id="drawer-host">--</span></div>
                     <div><span style="color: var(--text-dim);">Driver/Protocol:</span> <span class="mono" id="drawer-driver">--</span></div>
                     <div><span style="color: var(--text-dim);">Last Seen:</span> <span class="mono" id="drawer-last-seen">--</span></div>
+                </div>
+            </div>
+
+            <div class="card" id="drawer-doctor-card" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.04);">
+                <div class="card-title" style="color: #34d399;">
+                    <span>🩺 Doctor Recommendations</span>
+                </div>
+                <div id="drawer-doctor-content" style="display: flex; flex-direction: column; gap: 8px;">
+                    <div style="font-size: 11px; color: var(--text-dim);">No performance issues detected for this component.</div>
                 </div>
             </div>
 
@@ -1324,15 +1403,31 @@
                     No performance bottlenecks detected. System is running within optimal latency thresholds.
                 </div>`;
             } else {
-                bList.innerHTML = bottlenecks.map(b => `
-                    <div class="bottleneck-item" onclick="focusNode('${b.id}')">
-                        <div class="b-header">
-                            <span>${b.label}</span>
-                            <span class="mono">${b.avg_latency_ms}ms</span>
+                bList.innerHTML = bottlenecks.map(b => {
+                    const recs = b.recommendations || [];
+                    const recsHtml = recs.length > 0 ? recs.map(r => `
+                        <div class="doctor-fix-box">
+                            <div class="doctor-fix-header">
+                                <span>🩺 ${r.category}</span>
+                                <span class="doctor-badge-sev ${r.severity}">${r.severity}</span>
+                            </div>
+                            <div class="doctor-fix-title">${r.title}</div>
+                            <div class="doctor-fix-solution">💡 ${r.solution}</div>
+                            ${r.code_snippet ? `<pre class="doctor-code-block">${r.code_snippet}</pre>` : ''}
                         </div>
-                        <div class="b-reason">${b.reason}</div>
-                    </div>
-                `).join('');
+                    `).join('') : '';
+
+                    return `
+                        <div class="bottleneck-item" onclick="focusNode('${b.id}')">
+                            <div class="b-header">
+                                <span>${b.label}</span>
+                                <span class="mono">${b.avg_latency_ms}ms</span>
+                            </div>
+                            <div class="b-reason">${b.reason}</div>
+                            ${recsHtml}
+                        </div>
+                    `;
+                }).join('');
             }
 
             let maxApiLatency = 0, slowApi = '--';
@@ -1513,6 +1608,27 @@
             document.getElementById('drawer-driver').textContent = node.driver || 'N/A';
             document.getElementById('drawer-last-seen').textContent = node.lastSeenAt || 'Now';
             document.getElementById('drawer-metadata').textContent = JSON.stringify(node.metadata || {}, null, 2);
+
+            // Populate Doctor Recommendations for node
+            const bottlenecks = graphData.bottlenecks || [];
+            const nodeBottleneck = bottlenecks.find(b => b.id === node.id);
+            const doctorContainer = document.getElementById('drawer-doctor-content');
+
+            if (nodeBottleneck && nodeBottleneck.recommendations && nodeBottleneck.recommendations.length > 0) {
+                doctorContainer.innerHTML = nodeBottleneck.recommendations.map(r => `
+                    <div class="doctor-fix-box">
+                        <div class="doctor-fix-header">
+                            <span>🩺 ${r.category}</span>
+                            <span class="doctor-badge-sev ${r.severity}">${r.severity}</span>
+                        </div>
+                        <div class="doctor-fix-title">${r.title}</div>
+                        <div class="doctor-fix-solution">💡 ${r.solution}</div>
+                        ${r.code_snippet ? `<pre class="doctor-code-block">${r.code_snippet}</pre>` : ''}
+                    </div>
+                `).join('');
+            } else {
+                doctorContainer.innerHTML = `<div style="font-size: 11px; color: var(--text-dim);">No performance issues or latency anomalies detected for this node. Component is operating optimally.</div>`;
+            }
 
             document.getElementById('node-drawer-overlay').style.display = 'flex';
         }

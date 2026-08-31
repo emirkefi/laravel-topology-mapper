@@ -173,6 +173,8 @@ class TopologyManager
         $criticalCount = 0;
 
         foreach ($nodes as $node) {
+            $recommendations = \EmirKefi\TopologyMapper\Services\PerformanceDoctor::diagnoseNode($node, $warnLatency, $critLatency);
+
             if ($node->status === 'critical') {
                 $criticalCount++;
                 $bottlenecks[] = [
@@ -185,6 +187,7 @@ class TopologyManager
                     'reason' => $node->avgLatencyMs >= $critLatency
                         ? "Critical Latency: {$node->avgLatencyMs}ms (Threshold: {$critLatency}ms)"
                         : "High Error Rate: " . round($node->getErrorRate() * 100, 1) . "%",
+                    'recommendations' => $recommendations,
                 ];
             } elseif ($node->status === 'warning') {
                 $warningCount++;
@@ -196,6 +199,7 @@ class TopologyManager
                     'avg_latency_ms' => $node->avgLatencyMs,
                     'error_rate' => $node->getErrorRate(),
                     'reason' => "Warning Latency: {$node->avgLatencyMs}ms (Threshold: {$warnLatency}ms)",
+                    'recommendations' => $recommendations,
                 ];
             } else {
                 $healthyCount++;
@@ -204,12 +208,14 @@ class TopologyManager
 
         foreach ($edges as $edge) {
             if ($edge->status === 'critical' || $edge->status === 'warning') {
+                $edgeRecommendations = \EmirKefi\TopologyMapper\Services\PerformanceDoctor::diagnoseEdge($edge);
                 $bottlenecks[] = [
                     'type' => 'edge',
                     'id' => $edge->id,
                     'label' => "{$edge->source} ➔ {$edge->target}",
                     'avg_latency_ms' => $edge->avgLatencyMs,
                     'reason' => "Slow Edge Route: {$edge->avgLatencyMs}ms ({$edge->protocol})",
+                    'recommendations' => $edgeRecommendations,
                 ];
             }
         }

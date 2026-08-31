@@ -77,6 +77,13 @@ class MapTopologyCommand extends Command
             $this->line("<fg=red;options=bold>⚠ DETECTED BOTTLENECK ANOMALIES & LATENCY HOTSPOTS:</>");
             foreach ($graph['bottlenecks'] as $b) {
                 $this->line("  <fg=red>•</> <fg=white;options=bold>{$b['label']}</> <fg=yellow>({$b['avg_latency_ms']}ms)</> - <fg=gray>{$b['reason']}</>");
+                if (! empty($b['recommendations'])) {
+                    foreach ($b['recommendations'] as $rec) {
+                        $severityColor = $rec['severity'] === 'CRITICAL' ? 'red' : ($rec['severity'] === 'HIGH' ? 'yellow' : 'cyan');
+                        $this->line("    <fg={$severityColor};options=bold>🩺 Doctor Fix [{$rec['severity']}]:</> <fg=white>{$rec['title']}</>");
+                        $this->line("       <fg=gray>↳ {$rec['solution']}</>");
+                    }
+                }
             }
             $this->newLine();
         }
